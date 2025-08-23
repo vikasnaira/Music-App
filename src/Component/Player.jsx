@@ -10,7 +10,7 @@ const Player = ({ msg, settrfsong , onClick}) => {
     );
 
   return (
-    <div className="myDiv md:p-5 p-2 w-full fixed z-9 rounded-xl h-1/2  bottom-0 bg-black text-white overflow-y-scroll">
+    <div className="myDiv md:p-5 p-2 bg-black/70 w-full md:w-[82%] fixed z-9 rounded-xl h-1/2  bottom-0 text-white overflow-y-scroll">
       <h2 className="text-xl sticky md:-top-5 -top-1 bg-black ">Relative Results</h2>
       <ul className="space-y-3">
         {msg.map((song, index) => (

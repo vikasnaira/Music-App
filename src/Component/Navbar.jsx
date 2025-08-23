@@ -125,13 +125,13 @@ console.log("audioUrl", audioUrl);
       (
       <div className="song h-fit w-full flex-col  md:flex-row text-white font-sans md:px-20 py-10   md:py-4 flex items-center  gap-10">
         <div className="img flex items-start gap-10 px-5 w-full">   
-        <img src={audioUrl? audioUrl.image[2].url : imgurl} alt="song img" className="md:h-36 h-25 w-25 md:w-35" />
+        <img src={audioUrl? audioUrl.image[2].url : imgurl} alt="song img" className="md:h-36 h-[15%] w-[35%] md:w-35" />
         <div>
-          <h3 className="title text-lg md:text-3xl  md:py-4">{title}</h3>
-          <p className="font-extralight md:text-sm text-[8px]  text-gray">By {artist} <br /> {copyright} </p>
+          <h3 className="title md:text-3xl text-3xl  md:py-4">{title}</h3>
+          <p className="font-extralight  md:text-sm text-[3%]  text-gray">By {artist} <br /> {copyright} </p>
         </div>
         </div>
-        <div className=" text-sm button right-5  bottom-80 w-fit h-7  flex md:top-10 md:relative absolute gap-5">
+        <div className="text-sm button left-[50%]  bottom-[60%] w-[100%] h-[3%]  md:left-0 flex md:top-10 md:relative absolute gap-5">
         <button
           className="bg-[#FE7465] text-black w-fit md:h-fit h-8 px-2 md:px-4  md:py-4 rounded-full"
           onClick={handlePlayPause}>
@@ -153,7 +153,7 @@ console.log("audioUrl", audioUrl);
            <p className="text-[12px] md:flex hidden"> DOWNLOAD </p><GoDownload />
           </a>
         </button>
-        <input type="range" name="rangeinput" value={currentTime}  id="duration" onChange={handleRangeChange}  step="0.1" min="0" max={duration} className='md:w-full  w-full  accent-[#FE7465]  absolute md:right-0  md:-bottom-10 -bottom-10  z-99 h-[1px] cursor-pointer'/>
+        <input type="range" name="rangeinput" value={currentTime}  id="duration" onChange={handleRangeChange}  step="0.1" min="0" max={duration} className='md:w-full  sm:w-full  accent-[#FE7465]  absolute md:right-0  md:-bottom-10 -bottom-10   z-99 h-[1px] cursor-pointer'/>
         </div>
       </div>)}
     </div>
