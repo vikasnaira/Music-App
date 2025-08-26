@@ -146,7 +146,7 @@ const forDownload = async () => {
 
       {loading ? <Loader/>:
       (
-      <div className="song lg:h-[41vh] h-screen w-full   flex-col  lg:flex-row text-white font-sans    lg:py-0 flex items-center lg:bg-black/60 ">
+      <div className="song lg:h-[41vh] min-h-screen w-full   flex-col  lg:flex-row text-white font-sans    lg:py-0 flex items-center lg:bg-black/60 ">
         <div className="img flex flex-col lg:flex-row lg:px-10 items-center text-center gap-8 py-3  w-full">   
         <img src={audioUrl? audioUrl.image[2].url : imgurl} alt="song img" className="lg:h-35 h-[40%]  lg:rounded-none rounded-full lg:w-35 [animation-duration:15s]  lg:animate-none animate-spin"/>
         <div className="details flex flex-col gap-2  h-fit w-full  lg:items-start items-center">
