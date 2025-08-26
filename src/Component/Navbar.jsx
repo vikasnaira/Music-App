@@ -111,7 +111,7 @@ const forDownload = async () => {
     <div className="w-full h-[35%]  md:h-[40%]">
       {/* Navbar */}
       <div className='h-[25%] lg:h-fit w-full lg:bg-[#161616] py-4 bg-gray-500/60 shadow-xs shadow-black lg:py-3 text-[#FE7465] flex items-center justify-end lg:justify-between gap-20 lg:px-10 p-4 lg:gap-10'>
-        <div className="sm:flex gap-4 hidden lg:text-red-500 text-black w-[20%] ">
+        <div className="lg:flex gap-4 hidden lg:text-red-500 text-black w-[20%] ">
           <button>Home</button>
           <button>Album</button>
         </div>

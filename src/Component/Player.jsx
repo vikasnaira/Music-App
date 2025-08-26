@@ -4,7 +4,7 @@ import playSound from "./SoundClip";
 const Player = ({ msg, settrfsong , onClick}) => {
   if (!msg || msg.length === 0)
     return (
-      <div className="bg-black/60 absolute bottom-0 lg:block lg:h-[55%] h-[53vh] w-full hidden items-center rounded-xl justify-center lg:text-5xl text-amber-50">
+      <div className="bg-black/90 absolute bottom-0  lg:h-[50%] lg:flex h-[53vh] w-full hidden items-center rounded-xl justify-center lg:text-5xl text-amber-50">
         No songs found
       </div>
     );

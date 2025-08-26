@@ -20,7 +20,7 @@ const Sidebar = () => {
       </button>
 
       <div
-        className={`fixed top-0 left-0 h-full w-64 justify-center bg-[#161616] text-[#FE7465] 
+        className={`fixed top-0 left-0 h-full w-64 justify-center lg:justify-start bg-[#161616] text-[#FE7465] 
         flex flex-col gap-6 py-6 p-5 transition-transform duration-300 z-30
         ${isOpen ? "translate-x-0" : "-translate-x-full"} 
         lg:translate-x-0 lg:relative lg:w-[20%]`}
