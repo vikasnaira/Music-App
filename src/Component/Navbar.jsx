@@ -6,19 +6,16 @@ import { FcLikePlaceholder } from "react-icons/fc";
 import playSound from './SoundClip';
 import {  useRef, useState } from "react";
 import Loader from "./Loader";
-import { GiTrumpet } from "react-icons/gi";
+import { IoRepeat } from "react-icons/io5";
 
-const Navbar = ({setlist , audioUrl }) => {
-
-console.log("audioUrl", audioUrl);
-
+const Navbar = ({setlist , audioUrl , setaudioUrl }) => {
 
   const [inputData, setinputData] = useState('');
   const audioRef = useRef(null);
   const [loading, setloading] = useState(false)
   const [copyright, setcopyright] = useState("")
   const [currentTime, setCurrentTime] = useState(0)
-  // const [list, setlist] = useState([])
+  const [playTime, setplayTime] = useState()
   const [duration, setDuration] = useState(0);
   const [song, setsong] = useState('');
   const [title, settitle] = useState('shaiyaran')
@@ -33,6 +30,32 @@ console.log("audioUrl", audioUrl);
     setCurrentTime(audioRef.current.currentTime);
   };
 
+
+const forDownload = async () => {
+  alert("download start")
+  try {
+    const url = audioUrl ? audioUrl.downloadUrl[4].url : song;
+    if (!url) return;
+
+    // Fetch file as blob
+    const response = await fetch(url);
+    const blob = await response.blob();
+
+    const link = document.createElement("a");
+    link.href = window.URL.createObjectURL(blob);
+
+
+    link.download = `${artist} - ${title}-fromVkMuisic.mp3`;
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (error) {
+    console.error("Download failed:", error);
+  }
+};
+
+
    const handleRangeChange = (e) => {
     const time = e.target.value;
     audioRef.current.currentTime = time;
@@ -40,33 +63,33 @@ console.log("audioUrl", audioUrl);
   };
   
   const fetchData = async () => {
-    setloading(true);
+    playSound();
+    setaudioUrl("");
     try {
-      audioUrl = ""
+      setloading(true);
       audioRef.current.play();
-      setIsPlaying(true);  
-      playSound();
       const response = await fetch(`https://saavn.dev/api/search/songs?query=${inputData}`);
+      setIsPlaying(true);  
       const result = await response.json();
       settitle(result.data.results[0].name);
       setartist(result.data.results[0].artists.primary[0].name);
       setsong(result.data.results[0].downloadUrl[4].url);
       setimgurl(result.data.results[0].image[2].url);
       setcopyright(result.data.results[0].copyright)
-
+      setplayTime(result.data.results[0].playCount)
       // for send relative song for listing  
-      setlist(result.data.results);
-      console.log(list);
-    
-      setTimeout(() => {
-        audioRef.current.play();
-        setIsPlaying(false);
-      }, 200);
+      setlist(result.data.results);   
 
+
+      audioRef.current.play();
+      setIsPlaying(true);
+
+      
+      
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.log("Error fetching data:", error);
     } finally {
-      setinputData('');
+      // setinputData('');
       setloading(false)
     }
   };
@@ -85,55 +108,62 @@ console.log("audioUrl", audioUrl);
   };
 
   return (
-    <div className="w-full h-[35%] md:h-[40%]">
+    <div className="w-full h-[35%]  md:h-[40%]">
       {/* Navbar */}
-      <div className='h-[20%] w-full bg-[#161616] md:py-3 py-1 text-[#FE7465] flex items-center justify-around   md:justify-between px-10 gap-10'>
-        <div className="md:flex gap-5 hidden ">
+      <div className='h-[25%] lg:h-fit w-full lg:bg-[#161616] py-4 bg-gray-500/60 shadow-xs shadow-black lg:py-3 text-[#FE7465] flex items-center justify-end lg:justify-between gap-20 lg:px-10 p-4 lg:gap-10'>
+        <div className="sm:flex gap-4 hidden lg:text-red-500 text-black w-[20%] ">
           <button>Home</button>
           <button>Album</button>
         </div>
-        <div className="search flex items-center gap-3">
+        <div className="search flex items-center  w-[40] md:relative absolute left-15">
           <input
             type="text"
-            className='bg-sky-900/30 md:rounded-full border-1 md:py-1  px-3 w-full'
-            placeholder='search song here'
+            className='lg:bg-sky-900/30 h-7 lgtext-red-500 sm:w-full w-[70%] lg:h-8 rounded-l-full bg-black/60 text-white border-1 border-gray-500 px-3'
+            placeholder='search...'
             value={inputData}
             onChange={(e) => setinputData(e.target.value)}
           />
           <button
-            className="text-2xl bg-[#FE7465] cursor-pointer text-black md:p-1 rounded-full"
-            onClick={fetchData}
-          >
+            className="text-2xl lg:bg-[#FE7465] text-[#FE7465] lg:h-8 h-7 px-1 bg-red-500 cursor-pointer lg:text-black   rounded-r-full"onClick={fetchData}>
             <CiSearch />
           </button>
         </div>
-        <div className="md:flex hidden gap-5">
-          <button className="text-2xl hover:rotate-150 transition-transform"><CiSettings /></button>
-          <button><IoIosNotifications /></button>
+        <div className=" gap-5 sm:flex text-3xl">
+          <button className=" hover:rotate-150 hidden sm:flex transition-transform"><CiSettings /></button>
+          <button className="hidden sm:flex"><IoIosNotifications /></button>
           <img
             src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=600&auto=format&fit=crop&q=60"
             alt="user account"
-            className="w-8 h-8 rounded-full cursor-pointer"
+            className="w-8 h-8  lg:m-0  rounded-full cursor-pointer"
           />
         </div>
       </div>
+
+  
 
 
                                   {/* Song Display portion */}
 
       {loading ? <Loader/>:
       (
-      <div className="song h-fit w-full flex-col  md:flex-row text-white font-sans md:px-20 py-10   md:py-4 flex items-center  gap-10">
-        <div className="img flex items-start gap-10 px-5 w-full">   
-        <img src={audioUrl? audioUrl.image[2].url : imgurl} alt="song img" className="md:h-36 h-[15%] w-[35%] md:w-35" />
-        <div>
-          <h3 className="title md:text-3xl text-3xl  md:py-4">{title}</h3>
-          <p className="font-extralight  md:text-sm text-[3%]  text-gray">By {artist} <br /> {copyright} </p>
+      <div className="song lg:h-[41vh] h-screen w-full   flex-col  lg:flex-row text-white font-sans    lg:py-0 flex items-center lg:bg-black/60 ">
+        <div className="img flex flex-col lg:flex-row lg:px-10 items-center text-center gap-8 py-3  w-full">   
+        <img src={audioUrl? audioUrl.image[2].url : imgurl} alt="song img" className="lg:h-35 h-[40%]  lg:rounded-none rounded-full lg:w-35 [animation-duration:15s]  lg:animate-none animate-spin"/>
+        <div className="details flex flex-col gap-2  h-fit w-full  lg:items-start items-center">
+          <h3 className="title text-xl lg:text-3xl w-full">{title}</h3>
+          <p className="font-extralight  lg:text-lg text-sm text-gray w-full">By {artist} <br /> {copyright} <br />
+          playtime {playTime} </p>
         </div>
+          <div className="bg-red-500">
+          </div>
+
+                      {/* player controlers */}
         </div>
-        <div className="text-sm button left-[50%]  bottom-[60%] w-[100%] h-[3%]  md:left-0 flex md:top-10 md:relative absolute gap-5">
+        <div className="text-sm button bottom-1 w-full  px-3 items-center lg:left-0 flex rounded-full bg-gray-500/80 lg:bg-black/60 py-3 h-[15vh]  justify-center lg:justify-start lg:top-10 lg:relative absolute gap-5">
+        <img src={audioUrl? audioUrl.image[2].url : imgurl} alt="song img" className=" lg:rounded-full h-full hidden lg:flex  [animation-duration:15s]  animate-spin"/>
+          <button className='text-2xl  '><IoRepeat /></button>
         <button
-          className="bg-[#FE7465] text-black w-fit md:h-fit h-8 px-2 md:px-4  md:py-4 rounded-full"
+          className="bg-[#e35545] text-black hidden lg:block w-fit lg:h-fit h-14  lg:px-4  lg:py-4 rounded-full"
           onClick={handlePlayPause}>
           {isPlaying ?<FaPause /> : <FaPlay />}
         </button>
@@ -143,17 +173,22 @@ console.log("audioUrl", audioUrl);
         autoPlay
         onLoadedMetadata={handleLoadedMetadata}
         onTimeUpdate={handleTimeUpdate}
+        onEnded={() => setIsPlaying(false)} 
+        loop 
         >
         </audio>
-        <button className="bg-[#FE7465] text-black w-fit md:h-fit h-8 px-2 md:px-4  md:py-4 rounded-full">
+        <button className="bg-[#FE7465] text-black lg:h-fit p-3 lg:px-4  lg:py-4 rounded-full">
           <FcLikePlaceholder />
         </button>
-        <button className="bg-[#FE7465] text-extrabold text-black  w-fit md:h-fit h-8 px-2 md:p-4  rounded-full">
-          <a href={song} download className="flex items-center gap-2 md:px-4">
-           <p className="text-[12px] md:flex hidden"> DOWNLOAD </p><GoDownload />
-          </a>
+          <button
+            className="bg-[#FE7465] text-black lg:h-fit p-3 lg:px-4 lg:hidden  lg:py-4 rounded-full"
+            onClick={handlePlayPause}>
+            {isPlaying ?<FaPause />:<FaPlay />}
+          </button>
+        <button className="bg-[#FE7465] text-extrabold text-black  p-3 lg:h-fit  lg:p-4 w-fit  flex  rounded-full" onClick={forDownload}>
+           <p className="text-[12px] lg:flex hidden" > DOWNLOAD </p><GoDownload />
         </button>
-        <input type="range" name="rangeinput" value={currentTime}  id="duration" onChange={handleRangeChange}  step="0.1" min="0" max={duration} className='md:w-full  sm:w-full  accent-[#FE7465]  absolute md:right-0  md:-bottom-10 -bottom-10   z-99 h-[1px] cursor-pointer'/>
+         <input type="range" name="rangeinput" value={currentTime}  id="duration" onChange={handleRangeChange}  step="0.1" min="0" max={duration} className='lg:w-[70%] lg:left-15 w-[70%]  accent-[#FE7465]  absolute md:right-0  lg:bottom-2 bottom-2   z-99 lg:h-[1%] h-[1px] cursor-pointer'/>
         </div>
       </div>)}
     </div>
