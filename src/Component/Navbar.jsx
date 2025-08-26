@@ -118,7 +118,7 @@ const forDownload = async () => {
         <div className="search flex items-center  w-[40] md:relative absolute left-15">
           <input
             type="text"
-            className='lg:bg-sky-900/30 h-7 lgtext-red-500 sm:w-full w-[70%] lg:h-8 rounded-l-full bg-black/60 text-white border-1 border-gray-500 px-3'
+            className='lg:bg-sky-900/30 h-7 lgtext-red-500 sm:w-20vw  w-[50vw] lg:h-8 rounded-l-full bg-black/60 text-white border-1 border-gray-500 px-3'
             placeholder='search...'
             value={inputData}
             onChange={(e) => setinputData(e.target.value)}
