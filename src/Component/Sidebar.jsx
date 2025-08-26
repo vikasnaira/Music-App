@@ -1,27 +1,70 @@
-import React from 'react'
+import React, { useState } from "react";
 import { TbBrandNeteaseMusic } from "react-icons/tb";
 import { FaRegHeart } from "react-icons/fa";
 import { GoDownload } from "react-icons/go";
 import { RiPlayListFill } from "react-icons/ri";
-import { RxHamburgerMenu } from "react-icons/rx";
+import { RxHamburgerMenu, RxCross1 } from "react-icons/rx";
 import { SiItunes } from "react-icons/si";
-import playSound from './SoundClip';
-const Sidebar = () => {
-  return (
-    <div className='lg:w-[20%] bg-[#161616] text-[#FE7465] -left-70 min-w-fit absolute lg:left-0 lg:relative gap-7 py-10 items-start px-10 h-full flex flex-col' >
-      {/* for use name or profile */}
-      <button className='hover:bg-[#FE7465] lg:hidden flex text-white hover:text-black w-fit cursor-pointer py-1 rounded-3xl transition-all  px-4 items-center gap-2 absolute -right-26 top-2 z-9 '><RxHamburgerMenu /></button>
-      <div className="logo flex text-[#FE7465] border-1 rounded-2xl overflow-hidden backdrop-blur-2xl  pr-2 w-full h-[10%] items-center justify-between">
-      <img src="https://img.freepik.com/free-vector/detailed-podcast-logo-template-with-headphones_23-2148778392.jpg?t=st=1751514645~exp=1751518245~hmac=48947ac211db2521519ee8fd8d617dbc821cf89da899c4e8cd8b48fadcaaf3d7&w=1380" alt="logo" className='h-full' />
-        <h1 className='font-serif'>MUSIC APP</h1>
-      </div>
-      <button className='hover:bg-[#FE7465] hover:text-black w-fit cursor-pointer py-1 rounded-3xl transition-all flex px-4 items-center gap-2' onClick={playSound}><TbBrandNeteaseMusic />Discover</button>
-      <button className='hover:bg-[#FE7465] hover:text-black w-fit cursor-pointer py-1 rounded-3xl transition-all flex px-4 items-center gap-2'><SiItunes />iTunes</button>
-      <button className='hover:bg-[#FE7465] hover:text-black w-fit cursor-pointer py-1 rounded-3xl transition-all flex px-4 items-center gap-2'><RiPlayListFill />Playlist</button>
-      <button className='hover:bg-[#FE7465] hover:text-black w-fit cursor-pointer py-1 rounded-3xl transition-all flex px-4 items-center gap-2'><FaRegHeart />Favriout</button>
-      <button className='hover:bg-[#FE7465] hover:text-black w-fit cursor-pointer py-1 rounded-3xl transition-all flex px-4 items-center gap-2'><GoDownload/>Downloads</button>
-    </div>
-  )
-}
+import playSound from "./SoundClip";
 
-export default Sidebar
+const Sidebar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <button
+        className="lg:hidden fixed top-3 left-4 z-20 text-2xl  text-white lg:text-[#FE7465]"
+        onClick={() => setIsOpen(true)}
+      >
+        <RxHamburgerMenu />
+      </button>
+
+      <div
+        className={`fixed top-0 left-0 h-full w-64 justify-center bg-[#161616] text-[#FE7465] 
+        flex flex-col gap-6 py-6 p-5 transition-transform duration-300 z-30
+        ${isOpen ? "translate-x-0" : "-translate-x-full"} 
+        lg:translate-x-0 lg:relative lg:w-[20%]`}
+      >
+        {/* Close Button (mobile only) */}
+        <button
+          className="lg:hidden absolute top-4 right-4 text-xl text-[#FE7465]"
+          onClick={() => setIsOpen(false)}
+        >
+          <RxCross1 />
+        </button>
+
+        {/* Logo */}
+        <div className="logo flex items-center gap-2 border rounded-xl overflow-hidden p-1 backdrop-blur-md">
+          <img
+            src="https://img.freepik.com/free-vector/detailed-podcast-logo-template-with-headphones_23-2148778392.jpg?w=1380"
+            alt="logo"
+            className="h-12 w-12 rounded-md"
+          />
+          <h1 className="font-serif text-lg">MUSIC APP</h1>
+        </div>
+
+        {/* Menu Items */}
+        <button
+          onClick={playSound}
+          className="hover:bg-[#FE7465] hover:text-black py-2 px-4 rounded-2xl flex items-center gap-2"
+        >
+          <TbBrandNeteaseMusic /> Discover
+        </button>
+        <button className="hover:bg-[#FE7465] hover:text-black py-2 px-4 rounded-2xl flex items-center gap-2">
+          <SiItunes /> iTunes
+        </button>
+        <button className="hover:bg-[#FE7465] hover:text-black py-2 px-4 rounded-2xl flex items-center gap-2">
+          <RiPlayListFill /> Playlist
+        </button>
+        <button className="hover:bg-[#FE7465] hover:text-black py-2 px-4 rounded-2xl flex items-center gap-2">
+          <FaRegHeart /> Favorite
+        </button>
+        <button className="hover:bg-[#FE7465] hover:text-black py-2 px-4 rounded-2xl flex items-center gap-2">
+          <GoDownload /> Downloads
+        </button>
+      </div>
+    </>
+  );
+};
+
+export default Sidebar;

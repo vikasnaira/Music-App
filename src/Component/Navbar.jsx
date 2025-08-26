@@ -118,13 +118,13 @@ const forDownload = async () => {
         <div className="search flex items-center  w-[40] md:relative absolute left-15">
           <input
             type="text"
-            className='lg:bg-sky-900/30 h-7 lgtext-red-500 sm:w-20vw lg:w-full w-[50vw] lg:h-8 rounded-l-full bg-black/60 text-white border-1 border-gray-500 px-3'
+            className='lg:bg-sky-900/30 h-7 lg:text-red-500 w-[50vw]  lg:w-full lg:h-8 rounded-l-full bg-black/60 text-white border-1 border-gray-500 px-3'
             placeholder='search...'
             value={inputData}
             onChange={(e) => setinputData(e.target.value)}
           />
           <button
-            className="text-2xl lg:bg-[#FE7465] lg:text-[#FE7465] lg:h-8 h-7 px-1 text-black  bg-red-500 cursor-pointer  rounded-r-full"onClick={fetchData}>
+            className="text-2xl lg:bg-[#FE7465] lg:h-8 h-7 px-1 text-black  bg-white cursor-pointer  rounded-r-full"onClick={fetchData}>
             <CiSearch />
           </button>
         </div>
@@ -139,14 +139,12 @@ const forDownload = async () => {
         </div>
       </div>
 
-  
-
 
                                   {/* Song Display portion */}
 
       {loading ? <Loader/>:
       (
-      <div className="song lg:h-[41vh] min-h-screen w-full   flex-col  lg:flex-row text-white font-sans    lg:py-0 flex items-center lg:bg-black/60 ">
+      <div className="song lg:h-[41vh] h-screen w-full   flex-col  lg:flex-row text-white font-sans    lg:py-0 flex items-center lg:bg-black/60 ">
         <div className="img flex flex-col lg:flex-row lg:px-10 items-center text-center gap-8 py-3  w-full">   
         <img src={audioUrl? audioUrl.image[2].url : imgurl} alt="song img" className="lg:h-35 h-[40%]  lg:rounded-none rounded-full lg:w-35 [animation-duration:15s]  lg:animate-none animate-spin"/>
         <div className="details flex flex-col gap-2  h-fit w-full  lg:items-start items-center">
@@ -188,7 +186,7 @@ const forDownload = async () => {
         <button className="bg-[#FE7465] text-extrabold text-black  p-3 lg:h-fit  lg:p-4 w-fit  flex  rounded-full" onClick={forDownload}>
            <p className="text-[12px] lg:flex hidden" > DOWNLOAD </p><GoDownload />
         </button>
-         <input type="range" name="rangeinput" value={currentTime}  id="duration" onChange={handleRangeChange}  step="0.1" min="0" max={duration} className='lg:w-[70%] lg:left-15 w-[70%]  accent-[#FE7465]  absolute md:right-0  lg:bottom-2 bottom-2   z-99 lg:h-[1%] h-[1px] cursor-pointer'/>
+         <input type="range" name="rangeinput" value={currentTime}  id="duration" onChange={handleRangeChange}  step="0.1" min="0" max={duration} className='lg:w-[70%] lg:left-15 w-[70%]  accent-[#FE7465]  absolute md:right-0  lg:bottom-2 bottom-2   z-9 lg:h-[1%] h-[1px] cursor-pointer'/>
         </div>
       </div>)}
     </div>
