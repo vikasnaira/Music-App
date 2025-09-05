@@ -20,14 +20,14 @@ const Sidebar = () => {
       </button>
 
       <div
-        className={`fixed top-0 left-0 h-full w-64 justify-center lg:justify-start bg-[#161616] text-[#FE7465] 
+        className={`fixed top-0 left-0 h-full w-64 justify-center lg:justify-start lg:bg-[#161616] text-black bg-white lg:text-[#FE7465] 
         flex flex-col gap-6 py-6 p-5 transition-transform duration-300 z-30
         ${isOpen ? "translate-x-0" : "-translate-x-full"} 
         lg:translate-x-0 lg:relative lg:w-[20%]`}
       >
         {/* Close Button (mobile only) */}
         <button
-          className="lg:hidden absolute top-4 right-4 text-xl text-[#FE7465]"
+          className="lg:hidden absolute top-4 right-4 text-xl lg:text-[#FE7465]"
           onClick={() => setIsOpen(false)}
         >
           <RxCross1 />

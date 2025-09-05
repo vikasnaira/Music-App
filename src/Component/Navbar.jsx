@@ -7,6 +7,8 @@ import playSound from './SoundClip';
 import {  useRef, useState } from "react";
 import Loader from "./Loader";
 import { IoRepeat } from "react-icons/io5";
+import { RxCross1 } from "react-icons/rx";
+
 
 const Navbar = ({setlist , audioUrl , setaudioUrl }) => {
 
@@ -15,6 +17,7 @@ const Navbar = ({setlist , audioUrl , setaudioUrl }) => {
   const [loading, setloading] = useState(false)
   const [copyright, setcopyright] = useState("")
   const [currentTime, setCurrentTime] = useState(0)
+  const [visible, setvisible] = useState(false)
   const [playTime, setplayTime] = useState()
   const [duration, setDuration] = useState(0);
   const [song, setsong] = useState('');
@@ -32,7 +35,7 @@ const Navbar = ({setlist , audioUrl , setaudioUrl }) => {
 
 
 const forDownload = async () => {
-  alert("download start")
+  alert("downloading will start in few seconds...")
   try {
     const url = audioUrl ? audioUrl.downloadUrl[4].url : song;
     if (!url) return;
@@ -90,6 +93,7 @@ const forDownload = async () => {
       console.log("Error fetching data:", error);
     } finally {
       // setinputData('');
+      setvisible(true)
       setloading(false)
     }
   };
@@ -108,9 +112,9 @@ const forDownload = async () => {
   };
 
   return (
-    <div className="w-full h-[35%]  md:h-[40%]">
+    <div className="w-full h-[35%]  md:h-[40%] ">
       {/* Navbar */}
-      <div className='h-[25%] lg:h-fit w-full lg:bg-[#161616] py-4 bg-gray-500/60 shadow-xs shadow-black lg:py-3 text-[#FE7465] flex items-center justify-end lg:justify-between gap-20 lg:px-10 p-4 lg:gap-10'>
+      <div className='h-[10vh] lg:h-fit w-full sticky top-0 lg:bg-[#161616] py-4 bg-gray-500/60 shadow-xs shadow-black lg:py-3 text-[#FE7465] flex   items-center justify-end lg:justify-between gap-20 lg:px-10 p-4 lg:gap-10'>
         <div className="lg:flex gap-4 hidden lg:text-red-500 text-black w-[20%] ">
           <button>Home</button>
           <button>Album</button>
@@ -128,8 +132,8 @@ const forDownload = async () => {
             <CiSearch />
           </button>
         </div>
-        <div className=" gap-5 sm:flex text-3xl">
-          <button className=" hover:rotate-150 hidden sm:flex transition-transform"><CiSettings /></button>
+        <div className=" gap-5 flex lg:text-[#FE7465] md:text-black text-3xl">
+          <button className=" hover:rotate-150 hidden  md:flex transition-transform"><CiSettings /></button>
           <button className="hidden sm:flex"><IoIosNotifications /></button>
           <img
             src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=600&auto=format&fit=crop&q=60"
@@ -144,22 +148,36 @@ const forDownload = async () => {
 
       {loading ? <Loader/>:
       (
-      <div className="song lg:h-[41vh] h-screen w-full   flex-col  lg:flex-row text-white font-sans    lg:py-0 flex items-center lg:bg-black/60 ">
-        <div className="img flex flex-col lg:flex-row lg:px-10 items-center text-center gap-8 py-3  w-full">   
-        <img src={audioUrl? audioUrl.image[2].url : imgurl} alt="song img" className="lg:h-35 h-[40%]  lg:rounded-none rounded-full lg:w-35 [animation-duration:15s]  lg:animate-none animate-spin"/>
-        <div className="details flex flex-col gap-2  h-fit w-full  lg:items-start items-center">
-          <h3 className="title text-xl lg:text-3xl w-full">{title}</h3>
-          <p className="font-extralight  lg:text-lg text-sm text-gray w-full">By {artist} <br /> {copyright} <br />
-          playtime {playTime} </p>
-        </div>
-          <div className="bg-red-500">
-          </div>
+      <div className="song lg:h-[41vh] h-fit w-full justify-center lg:relative absolute bottom-0 flex-col  lg:flex-row text-white font-sans lg:py-0 flex items-center ">
 
-                      {/* player controlers */}
+
+        {/* Music player for small screen */}
+
+        <div className={`img flex  lg:h-full lg:relative absolute bottom-0 h-[12vh] lg:px-10 bg-black transition-transform duration-300 z-999  lg:bg-transparent items-center text-center lg:gap-8 justify-evenly  gap-2 w-full 
+          ${visible? "translate-y-0" : "translate-y-20" }`}>   
+          <button className=" lg:hidden flex" onClick={()=>{audioRef.current.pause(), setsong("") , setvisible(false)}} >
+             <RxCross1 />
+          </button>
+        <img src={audioUrl? audioUrl.image[2].url : imgurl} alt="song img" className="lg:h-35 h-13 lg:rounded-none rounded-full lg:w-35 [animation-duration:15s]  lg:animate-none animate-spin"/>
+        <div className="details flex flex-col min-w-1/2 overflow-hidden  h-fit items-start">
+          <h3 className="title text-[4vw] lg:text-3xl text-nowrap">{title}</h3>
+          <p className="text-[3vw] lg:hidden  flex font-light">{artist}</p>
+          <p className="font-extralight hidden lg:block lg:text-lg text-sm text-gray w-full">By {artist} <br /> {copyright} <br />
+          playtime {playTime} </p>  
         </div>
-        <div className="text-sm button bottom-1 w-full  px-3 items-center lg:left-0 flex rounded-full bg-gray-500/80 lg:bg-black/60 py-3 h-[15vh]  justify-center lg:justify-start lg:top-10 lg:relative absolute gap-5">
+           <button
+            className="bg-white text-black lg:h-fit p-2 lg:px-4 lg:hidden  lg:py-4 rounded-full"
+            onClick={handlePlayPause}>
+            {isPlaying ?<FaPause />:<FaPlay />}
+          </button>
+          <button className="text-2xl " onClick={forDownload}><GoDownload /></button>
+         <input type="range" name="rangeinput" value={currentTime}  id="duration" onChange={handleRangeChange}  step="0.1" min="0" max={duration} className='custom-range lg:hidden left-0   absolute   w-full  bottom-15  accent-black h-[5px] cursor-pointer'/>
+        </div>
+        
+                      {/* player controlers */}
+        <div className="text-sm button bottom-1 lg:flex hidden w-[85%]  px-3 items-center lg:left-0  rounded-full lg:bg-black/60 py-3 h-[15vh]  justify-center lg:justify-start lg:top-10 lg:relative absolute gap-5">
         <img src={audioUrl? audioUrl.image[2].url : imgurl} alt="song img" className=" lg:rounded-full h-full hidden lg:flex  [animation-duration:15s]  animate-spin"/>
-          <button className='text-2xl  '><IoRepeat /></button>
+          <button className='text-2xl'><IoRepeat /></button>
         <button
           className="bg-[#e35545] text-black hidden lg:block w-fit lg:h-fit h-14  lg:px-4  lg:py-4 rounded-full"
           onClick={handlePlayPause}>
@@ -186,7 +204,7 @@ const forDownload = async () => {
         <button className="bg-[#FE7465] text-extrabold text-black  p-3 lg:h-fit  lg:p-4 w-fit  flex  rounded-full" onClick={forDownload}>
            <p className="text-[12px] lg:flex hidden" > DOWNLOAD </p><GoDownload />
         </button>
-         <input type="range" name="rangeinput" value={currentTime}  id="duration" onChange={handleRangeChange}  step="0.1" min="0" max={duration} className='lg:w-[70%] lg:left-15 w-[70%]  accent-[#FE7465]  absolute md:right-0  lg:bottom-2 bottom-2   z-9 lg:h-[1%] h-[1px] cursor-pointer'/>
+         <input type="range" name="rangeinput" value={currentTime}  id="duration" onChange={handleRangeChange}  step="0.1" min="0" max={duration} className='lg:w-[70%] lg:left-15 w-[70%]  accent-[#FE7465]  absolute md:right-0  lg:bottom-2 bottom-0   z-9 lg:h-[1%] h-[1px] cursor-pointer'/>
         </div>
       </div>)}
     </div>
