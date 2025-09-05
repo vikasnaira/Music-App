@@ -10,14 +10,13 @@ import { IoRepeat } from "react-icons/io5";
 import { RxCross1 } from "react-icons/rx";
 
 
-const Navbar = ({setlist , audioUrl , setaudioUrl }) => {
+const Navbar = ({setvisible, visible, setlist , audioUrl , setaudioUrl}) => {
 
   const [inputData, setinputData] = useState('');
   const audioRef = useRef(null);
   const [loading, setloading] = useState(false)
   const [copyright, setcopyright] = useState("")
   const [currentTime, setCurrentTime] = useState(0)
-  const [visible, setvisible] = useState(false)
   const [playTime, setplayTime] = useState()
   const [duration, setDuration] = useState(0);
   const [song, setsong] = useState('');
@@ -170,12 +169,12 @@ const forDownload = async () => {
             onClick={handlePlayPause}>
             {isPlaying ?<FaPause />:<FaPlay />}
           </button>
-          <button className="text-2xl " onClick={forDownload}><GoDownload /></button>
-         <input type="range" name="rangeinput" value={currentTime}  id="duration" onChange={handleRangeChange}  step="0.1" min="0" max={duration} className='custom-range lg:hidden left-0   absolute   w-full  bottom-15  accent-black h-[5px] cursor-pointer'/>
+          <button className="text-2xl lg:hidden flex " onClick={forDownload}><GoDownload /></button>
+         <input type="range" name="rangeinput" value={currentTime}  id="duration" onChange={handleRangeChange}  step="0.1" min="0" max={duration} className='custom-range lg:hidden left-0  absolute   w-full  bottom-17  accent-black h-[5px] cursor-pointer'/>
         </div>
         
                       {/* player controlers */}
-        <div className="text-sm button bottom-1 lg:flex hidden w-[85%]  px-3 items-center lg:left-0  rounded-full lg:bg-black/60 py-3 h-[15vh]  justify-center lg:justify-start lg:top-10 lg:relative absolute gap-5">
+        <div className="text-sm button  bottom-1 lg:flex hidden w-[85%]  px-3 items-center lg:left-0  rounded-full lg:bg-black/60 py-3 h-[15vh]  justify-center lg:justify-start lg:top-10 lg:relative absolute gap-5">
         <img src={audioUrl? audioUrl.image[2].url : imgurl} alt="song img" className=" lg:rounded-full h-full hidden lg:flex  [animation-duration:15s]  animate-spin"/>
           <button className='text-2xl'><IoRepeat /></button>
         <button
@@ -204,7 +203,7 @@ const forDownload = async () => {
         <button className="bg-[#FE7465] text-extrabold text-black  p-3 lg:h-fit  lg:p-4 w-fit  flex  rounded-full" onClick={forDownload}>
            <p className="text-[12px] lg:flex hidden" > DOWNLOAD </p><GoDownload />
         </button>
-         <input type="range" name="rangeinput" value={currentTime}  id="duration" onChange={handleRangeChange}  step="0.1" min="0" max={duration} className='lg:w-[70%] lg:left-15 w-[70%]  accent-[#FE7465]  absolute md:right-0  lg:bottom-2 bottom-0   z-9 lg:h-[1%] h-[1px] cursor-pointer'/>
+         <input type="range" name="rangeinput" value={currentTime}  id="duration" onChange={handleRangeChange}  step="0.1" min="0" max={duration} className='w-[70%] left-15 accent-[#FE7465] hidden lg:flex absolute bottom-2  z-9 h-[1%]  cursor-pointer'/>
         </div>
       </div>)}
     </div>
