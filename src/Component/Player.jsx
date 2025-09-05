@@ -10,7 +10,7 @@ const Player = ({ msg, settrfsong ,setvisible , visible}) => {
     );
 
   return (
-    <div className="myDiv lg:bg-black/60 h-[90vh] bg-white md:p-2 p-2 w-full lg:w-[82%] top-12  lg:block  fixed z-0 lg:top-[50%] lg:rounded-xl lg:h-1/2 md:bottom-0 text-white overflow-y-scroll">
+    <div className="myDiv lg:bg-black/60 h-[100%] bg-white md:p-2 p-2 w-full lg:w-[82%] top-10  lg:block  fixed z-0 lg:top-[50%] lg:rounded-xl lg:h-1/2 md:bottom-0 text-white overflow-y-scroll">
       <h2 className="text-xl lg:sticky lg:-top-2 z-99 -top-1 bg-black-60 lg:bg-black">Relative Results</h2>
       <ul className="space-y-3">
         {msg.map((song, index) => (

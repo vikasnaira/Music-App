@@ -113,7 +113,7 @@ const forDownload = async () => {
   return (
     <div className="w-full h-[35%]  md:h-[40%] ">
       {/* Navbar */}
-      <div className='h-[10vh] lg:h-fit w-full sticky top-0 lg:bg-[#161616] py-4 bg-gray-500/60 shadow-xs shadow-black lg:py-3 text-[#FE7465] flex   items-center justify-end lg:justify-between gap-20 lg:px-10 p-4 lg:gap-10'>
+      <div className='h-[20%] lg:h-fit w-full sticky top-0 lg:bg-[#161616] py-4 bg-gray-500/60 shadow-xs shadow-black lg:py-3 text-[#FE7465] flex   items-center justify-end lg:justify-between gap-20 lg:px-10 p-4 lg:gap-10'>
         <div className="lg:flex gap-4 hidden lg:text-red-500 text-black w-[20%] ">
           <button>Home</button>
           <button>Album</button>
@@ -131,9 +131,9 @@ const forDownload = async () => {
             <CiSearch />
           </button>
         </div>
-        <div className=" gap-5 flex lg:text-[#FE7465] md:text-black text-3xl">
-          <button className=" hover:rotate-150 hidden  md:flex transition-transform"><CiSettings /></button>
-          <button className="hidden sm:flex"><IoIosNotifications /></button>
+        <div className=" gap-5 flex lg:text-[#FE7465] sm:text-white text-3xl">
+          <button className=" hover:rotate-150 hidden  sm:flex transition-transform"><CiSettings /></button>
+          <button className="hidden  sm:flex"><IoIosNotifications /></button>
           <img
             src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=600&auto=format&fit=crop&q=60"
             alt="user account"
@@ -147,21 +147,21 @@ const forDownload = async () => {
 
       {loading ? <Loader/>:
       (
-      <div className="song lg:h-[41vh] h-fit w-full justify-center lg:relative absolute bottom-0 flex-col  lg:flex-row text-white font-sans lg:py-0 flex items-center ">
+      <div className="song  lg:h-[41vh] h-fit w-full justify-center lg:relative  bottom-0 flex-col  lg:flex-row text-white font-sans lg:py-0 flex items-center ">
 
 
         {/* Music player for small screen */}
 
-        <div className={`img flex  lg:h-full lg:relative absolute bottom-0 h-[12vh] lg:px-10 bg-black transition-transform duration-300 z-999  lg:bg-transparent items-center text-center lg:gap-8 justify-evenly  gap-2 w-full 
+        <div className={`img flex  lg:h-full lg:relative lg:translate-y-0 bg-black lg:bg-transparent absolute bottom-0  h-[12%] lg:px-10  transition-transform duration-300 z-999   items-center text-center lg:gap-8 justify-evenly  gap-2 w-full 
           ${visible? "translate-y-0" : "translate-y-20" }`}>   
           <button className=" lg:hidden flex" onClick={()=>{audioRef.current.pause(), setsong("") , setvisible(false)}} >
              <RxCross1 />
           </button>
         <img src={audioUrl? audioUrl.image[2].url : imgurl} alt="song img" className="lg:h-35 h-13 lg:rounded-none rounded-full lg:w-35 [animation-duration:15s]  lg:animate-none animate-spin"/>
-        <div className="details flex flex-col min-w-1/2 overflow-hidden  h-fit items-start">
+        <div className="details flex flex-col min-w-1/2 overflow-hidden h-fit items-start p-1">
           <h3 className="title text-[4vw] lg:text-3xl text-nowrap">{title}</h3>
           <p className="text-[3vw] lg:hidden  flex font-light">{artist}</p>
-          <p className="font-extralight hidden lg:block lg:text-lg text-sm text-gray w-full">By {artist} <br /> {copyright} <br />
+          <p className="font-extralight hidden lg:block lg:text-lg text-sm text-gray ">By {artist} <br /> {copyright} <br />
           playtime {playTime} </p>  
         </div>
            <button
