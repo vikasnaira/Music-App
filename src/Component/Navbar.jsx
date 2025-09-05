@@ -170,7 +170,7 @@ const forDownload = async () => {
             {isPlaying ?<FaPause />:<FaPlay />}
           </button>
           <button className="text-2xl lg:hidden flex " onClick={forDownload}><GoDownload /></button>
-         <input type="range" name="rangeinput" value={currentTime}  id="duration" onChange={handleRangeChange}  step="0.1" min="0" max={duration} className='custom-range lg:hidden left-0  absolute   w-full  bottom-17  accent-black h-[5px] cursor-pointer'/>
+         <input type="range" name="rangeinput" value={currentTime}  id="duration" onChange={handleRangeChange}  step="0.1" min="0" max={duration} className='custom-range lg:hidden left-0  absolute   w-full  bottom-[100%] z-99  accent-black h-[5px] cursor-pointer'/>
         </div>
         
                       {/* player controlers */}
