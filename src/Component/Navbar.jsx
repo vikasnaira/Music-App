@@ -14,6 +14,7 @@ const Navbar = ({setvisible, visible, setlist , audioUrl , setaudioUrl}) => {
 
   const [inputData, setinputData] = useState('');
   const audioRef = useRef(null);
+  const [value, setvalue] = useState(0)
   const [loading, setloading] = useState(false)
   const [copyright, setcopyright] = useState("")
   const [currentTime, setCurrentTime] = useState(0)
@@ -32,7 +33,7 @@ const Navbar = ({setvisible, visible, setlist , audioUrl , setaudioUrl}) => {
     setCurrentTime(audioRef.current.currentTime);
   };
 
-  console.log(audioUrl);
+  console.log(value);
   
 
 const forDownload = async () => {
@@ -60,11 +61,7 @@ const forDownload = async () => {
 };
 
 
-   const handleRangeChange = (e) => {
-    const time = e.target.value;
-    audioRef.current.currentTime = time;
-    setCurrentTime(time);
-  };
+    
   
   const fetchData = async () => {
     playSound();
@@ -153,6 +150,11 @@ const forDownload = async () => {
           <button className=" lg:hidden flex" onClick={()=>{audioRef.current.pause(), setsong("") , setvisible(false)}} >
              <RxCross1 />
           </button>
+        <p className="text-xs">
+            {Math.floor(currentTime / 60)}:
+            {(Math.floor(currentTime % 60)).toString().padStart(2, "0")}
+          </p>
+
         <img src={audioUrl? audioUrl.image[2].url : imgurl} alt="song img" className="lg:h-35 h-13 lg:rounded-none rounded-full lg:w-35 [animation-duration:15s]  lg:animate-none animate-spin"/>
         <div className="details flex flex-col min-w-1/2 overflow-hidden h-fit items-start p-1">
           <h3 className="title text-xl  lg:text-3xl text-nowrap">{audioUrl.name?audioUrl.name:title}</h3>
@@ -166,7 +168,7 @@ const forDownload = async () => {
             {isPlaying ?<FaPause />:<FaPlay />}
           </button>
           <button className="text-2xl lg:hidden flex " onClick={forDownload}><GoDownload /></button>
-         <input type="range" name="rangeinput" value={currentTime}  id="duration" onChange={handleRangeChange}  step="0.1" min="0" max={duration} className='custom-range lg:hidden left-0  absolute   w-full  bottom-[100%] z-99  accent-black h-[5px] cursor-pointer'/>
+         <input type="range" name="rangeinput" value={currentTime}  id="duration" step="0.1" min="0" max={duration} className='custom-range lg:hidden left-0  absolute   w-full  bottom-[100%] z-30  accent-black h-[5px] cursor-pointer'/>
         </div>
         
                       {/* player controlers */}
@@ -178,16 +180,16 @@ const forDownload = async () => {
           onClick={handlePlayPause}>
           {isPlaying ?<FaPause /> : <FaPlay />}
         </button>
-        <audio
-        ref={audioRef}
-        src={audioUrl ? audioUrl.downloadUrl[4].url :song}  
-        autoPlay
-        onLoadedMetadata={handleLoadedMetadata}
-        onTimeUpdate={handleTimeUpdate}
-        onEnded={() => setIsPlaying(false)} 
-        loop 
-        >
-        </audio>
+       <audio
+  ref={audioRef}
+  src={audioUrl ? audioUrl.downloadUrl[4].url : song}
+  autoPlay
+  onLoadedMetadata={handleLoadedMetadata}
+  onTimeUpdate={(e) => setCurrentTime(e.target.currentTime)} // 🔥 auto update
+  onEnded={() => setIsPlaying(false)}
+  loop
+/>
+
         <button className="bg-[#FE7465] text-black lg:h-fit p-3 lg:px-4  lg:py-4 rounded-full">
           <FcLikePlaceholder />
         </button>
@@ -199,7 +201,20 @@ const forDownload = async () => {
         <button className="bg-[#FE7465] text-extrabold text-black  p-3 lg:h-fit  lg:p-4 w-fit  flex  rounded-full" onClick={forDownload}>
            <p className="text-[12px] lg:flex hidden" > DOWNLOAD </p><GoDownload />
         </button>
-         <input type="range" name="rangeinput" value={currentTime}  id="duration" onChange={handleRangeChange}  step="0.1" min="0" max={duration} className='w-[70%] left-15 accent-[#FE7465] hidden lg:flex absolute bottom-2  z-9 h-[1%]  cursor-pointer'/>
+     <input 
+  type="range" 
+  value={currentTime} 
+  step="0.1" 
+  min="0" 
+  max={duration}  
+  onChange={(e) => {
+    const newTime = parseFloat(e.target.value);
+    setCurrentTime(newTime);
+    audioRef.current.currentTime = newTime; // slider से audio move
+  }}
+  className="w-[70%] accent-[#FE7465] hidden lg:flex absolute bottom-2 z-9 h-[1%] cursor-pointer"
+/>
+
         </div>
       </div>)}
     </div>
