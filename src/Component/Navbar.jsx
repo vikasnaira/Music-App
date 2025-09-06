@@ -150,14 +150,14 @@ const forDownload = async () => {
         {/* Music player for small screen */}
         <Home/>
         <div className={`img flex  lg:h-full lg:relative lg:translate-y-0 bg-black lg:bg-transparent absolute bottom-[8%]  h-[12%] lg:px-10  transition-transform duration-300 z-999   items-center text-center lg:gap-8 justify-evenly  gap-2 w-full 
-          ${visible? "translate-y-0" : "translate-y-30" }`}>   
+          ${visible? "translate-y-0" : "translate-y-35" }`}>   
           <button className=" lg:hidden flex" onClick={()=>{audioRef.current.pause(), setsong("") , setvisible(false)}} >
              <RxCross1 />
           </button>
         <img src={audioUrl? audioUrl.image[2].url : imgurl} alt="song img" className="lg:h-35 h-13 lg:rounded-none rounded-full lg:w-35 [animation-duration:15s]  lg:animate-none animate-spin"/>
         <div className="details flex flex-col min-w-1/2 overflow-hidden h-fit items-start p-1">
-          <h3 className="title text-2xl  lg:text-3xl text-nowrap">{title}</h3>
-          <p className="text-xl lg:hidden  flex font-light">{artist}</p>
+          <h3 className="title text-xl  lg:text-3xl text-nowrap">{title}</h3>
+          <p className="text-lg lg:hidden  flex font-light">{artist}</p>
           <p className="font-extralight hidden lg:block lg:text-lg text-sm text-gray ">By {artist} <br /> {copyright} <br />
           playtime {playTime} </p>  
         </div>
