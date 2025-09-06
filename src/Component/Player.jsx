@@ -1,7 +1,7 @@
 import { FaPlay } from "react-icons/fa";
 import playSound from "./SoundClip";
 
-const Player = ({ msg, settrfsong ,setvisible ,setloading}) => {
+const Player = ({ msg, settrfsong ,setvisible}) => {
   if (!msg || msg.length === 0)
     return (
       <div className="bg-black/90 absolute  lg:h-1/2 bottom-0  flex h-[93%] w-full  items-center lg:rounded-xl justify-center lg:text-5xl text-amber-50">

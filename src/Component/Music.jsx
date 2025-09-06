@@ -4,10 +4,11 @@ import Player from './Player'
 import { useState } from 'react'
 
 const Music = () => { 
-  const [list, setlist] = useState([]);
+  const [list, setlist] = useState([]); // list of relative songs
   const [trfsong, settrfsong] = useState(""); // current playing song url
   const [visible, setvisible] = useState(false)
-
+  console.log(trfsong);
+  
   return (
     <div className='main h-full  overflow-hidden relative justify-between w-full flex backdrop-blur-sm lg:backdrop-blur-lg'>
       <Sidebar/>

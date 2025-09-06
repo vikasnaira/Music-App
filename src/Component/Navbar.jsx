@@ -32,6 +32,8 @@ const Navbar = ({setvisible, visible, setlist , audioUrl , setaudioUrl}) => {
     setCurrentTime(audioRef.current.currentTime);
   };
 
+  console.log(audioUrl);
+  
 
 const forDownload = async () => {
   alert("downloading will start in few seconds...")
@@ -71,6 +73,7 @@ const forDownload = async () => {
       setloading(true);
       audioRef.current.play();
       const response = await fetch(`https://saavn.dev/api/search/songs?query=${inputData}`);
+      // const response = await fetch("http://127.0.0.1:5000/result/?url=https://gaana.com/song/i-really-do-36&lyrics=true")
       setIsPlaying(true);  
       const result = await response.json();
       settitle(result.data.results[0].name);
@@ -81,12 +84,8 @@ const forDownload = async () => {
       setplayTime(result.data.results[0].playCount)
       // for send relative song for listing  
       setlist(result.data.results);   
-
-
       audioRef.current.play();
       setIsPlaying(true);
-
-      
       
     } catch (error) {
       console.log("Error fetching data:", error);
@@ -149,15 +148,15 @@ const forDownload = async () => {
       <div className="song  lg:h-[41vh] h-fit w-full justify-center lg:relative  bottom-0 flex-col  lg:flex-row text-white font-sans lg:py-0 flex items-center ">
         {/* Music player for small screen */}
         <Home/>
-        <div className={`img flex  lg:h-full lg:relative lg:translate-y-0 bg-black lg:bg-transparent absolute bottom-[8%]  h-[12%] lg:px-10  transition-transform duration-300 z-999   items-center text-center lg:gap-8 justify-evenly  gap-2 w-full 
+        <div className={`img flex  lg:h-full lg:relative lg:translate-y-0 bg-black lg:bg-transparent absolute bottom-[8%]  h-[12%] lg:px-10  transition-transform duration-300 z-9   items-center text-center lg:gap-8 justify-evenly  gap-2 w-full 
           ${visible? "translate-y-0" : "translate-y-35" }`}>   
           <button className=" lg:hidden flex" onClick={()=>{audioRef.current.pause(), setsong("") , setvisible(false)}} >
              <RxCross1 />
           </button>
         <img src={audioUrl? audioUrl.image[2].url : imgurl} alt="song img" className="lg:h-35 h-13 lg:rounded-none rounded-full lg:w-35 [animation-duration:15s]  lg:animate-none animate-spin"/>
         <div className="details flex flex-col min-w-1/2 overflow-hidden h-fit items-start p-1">
-          <h3 className="title text-xl  lg:text-3xl text-nowrap">{title}</h3>
-          <p className="text-lg lg:hidden  flex font-light">{artist}</p>
+          <h3 className="title text-xl  lg:text-3xl text-nowrap">{audioUrl.name?audioUrl.name:title}</h3>
+          <p className="text-lg lg:hidden  flex font-light">{audioUrl?audioUrl.artists.primary[0].name:artist}</p>
           <p className="font-extralight hidden lg:block lg:text-lg text-sm text-gray ">By {artist} <br /> {copyright} <br />
           playtime {playTime} </p>  
         </div>
