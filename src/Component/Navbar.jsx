@@ -8,7 +8,7 @@ import {  useRef, useState } from "react";
 import Loader from "./Loader";
 import { IoRepeat } from "react-icons/io5";
 import { RxCross1 } from "react-icons/rx";
-
+import Home from "./Home";
 
 const Navbar = ({setvisible, visible, setlist , audioUrl , setaudioUrl}) => {
 
@@ -123,6 +123,7 @@ const forDownload = async () => {
             type="text"
             className='lg:bg-sky-900/30 h-7 lg:text-red-500 w-[50vw]  lg:w-full lg:h-8 rounded-l-full bg-black/60 text-white border-1 border-gray-500 px-3'
             placeholder='search...'
+            name="search"
             value={inputData}
             onChange={(e) => setinputData(e.target.value)}
           />
@@ -142,25 +143,21 @@ const forDownload = async () => {
         </div>
       </div>
 
-
                                   {/* Song Display portion */}
-
       {loading ? <Loader/>:
       (
       <div className="song  lg:h-[41vh] h-fit w-full justify-center lg:relative  bottom-0 flex-col  lg:flex-row text-white font-sans lg:py-0 flex items-center ">
-
-
         {/* Music player for small screen */}
-
-        <div className={`img flex  lg:h-full lg:relative lg:translate-y-0 bg-black lg:bg-transparent absolute bottom-0  h-[12%] lg:px-10  transition-transform duration-300 z-999   items-center text-center lg:gap-8 justify-evenly  gap-2 w-full 
-          ${visible? "translate-y-0" : "translate-y-20" }`}>   
+        <Home/>
+        <div className={`img flex  lg:h-full lg:relative lg:translate-y-0 bg-black lg:bg-transparent absolute bottom-[8%]  h-[12%] lg:px-10  transition-transform duration-300 z-999   items-center text-center lg:gap-8 justify-evenly  gap-2 w-full 
+          ${visible? "translate-y-0" : "translate-y-30" }`}>   
           <button className=" lg:hidden flex" onClick={()=>{audioRef.current.pause(), setsong("") , setvisible(false)}} >
              <RxCross1 />
           </button>
         <img src={audioUrl? audioUrl.image[2].url : imgurl} alt="song img" className="lg:h-35 h-13 lg:rounded-none rounded-full lg:w-35 [animation-duration:15s]  lg:animate-none animate-spin"/>
         <div className="details flex flex-col min-w-1/2 overflow-hidden h-fit items-start p-1">
-          <h3 className="title text-[4vw] lg:text-3xl text-nowrap">{title}</h3>
-          <p className="text-[3vw] lg:hidden  flex font-light">{artist}</p>
+          <h3 className="title text-2xl  lg:text-3xl text-nowrap">{title}</h3>
+          <p className="text-xl lg:hidden  flex font-light">{artist}</p>
           <p className="font-extralight hidden lg:block lg:text-lg text-sm text-gray ">By {artist} <br /> {copyright} <br />
           playtime {playTime} </p>  
         </div>
