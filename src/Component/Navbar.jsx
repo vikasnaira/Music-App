@@ -117,7 +117,7 @@ const forDownload = async () => {
         <div className="search flex items-center  w-[40] md:relative absolute left-15">
           <input
             type="text"
-            className='lg:bg-sky-900/30 h-7 lg:text-red-500 w-[50vw]  lg:w-full lg:h-8 rounded-l-full bg-black/60 text-white border-1 border-gray-500 px-3'
+            className='lg:bg-sky-900/30 h-7 lg:text-red-500 lg:w-[30vw] w-[50vw] lg:h-8 rounded-l-full bg-black/60 text-white border-1 border-gray-500 px-3'
             placeholder='search...'
             name="search"
             value={inputData}
@@ -212,7 +212,7 @@ const forDownload = async () => {
     setCurrentTime(newTime);
     audioRef.current.currentTime = newTime; // slider से audio move
   }}
-  className="w-[70%] accent-[#FE7465] hidden lg:flex absolute bottom-2 z-9 h-[1%] cursor-pointer"
+  className="w-[70%] accent-[#FE7465] hidden lg:flex absolute bottom-2 z-9 left-[13%] h-[1%] cursor-pointer"
 />
 
         </div>

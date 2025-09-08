@@ -31,7 +31,7 @@ const Player = ({ msg, settrfsong ,setvisible}) => {
             </div>
             <div className="flex w-[30%] justify-between gap-10">
               <p className="lg:flex hidden">
-                {Math.floor(song.duration / 60)}.{song.duration % 60}s
+                {Math.floor(song.duration / 60)}:{song.duration % 6}
               </p>
               <p className="text-sm lg:flex  hidden">{song.playCount} Plays</p>
             </div>
